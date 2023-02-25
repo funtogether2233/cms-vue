@@ -44,7 +44,7 @@ class Request {
     this.instance.interceptors.response.use(
       (res) => {
         // 全局响应成功的拦截
-        return res;
+        return res.data;
       },
       (err) => {
         // 全局响应成功的拦截
@@ -75,7 +75,7 @@ class Request {
         .then((res) => {
           // 单次响应的成功拦截处理
           if (config.interceptors?.responseSuccess) {
-            config.interceptors.responseSuccess(res);
+            res = config.interceptors.responseSuccess(res);
           }
           resolve(res);
         })
