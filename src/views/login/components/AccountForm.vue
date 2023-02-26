@@ -66,7 +66,7 @@ function accountLogin(isRemPwd: boolean) {
       const password = accountForm.password;
 
       // 发送登录请求
-      loginStore.accountLoginAction({ name, password }).then((res) => {
+      loginStore.accountLoginAction({ name, password }).then(() => {
         // 记住密码
         if (isRemPwd) {
           localCache.setCache(ACCOUNT_CACHE.name, name);
