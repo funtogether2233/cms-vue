@@ -1,7 +1,19 @@
 <template>
-  <div class="login">login</div>
+  <div class="login">
+    <LoginPanel />
+  </div>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import LoginPanel from './components/LoginPanel.vue';
+</script>
 
-<style lang="less" scoped></style>
+<style lang="less" scoped>
+.login {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+}
+</style>
