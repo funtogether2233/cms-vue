@@ -5,6 +5,8 @@ import type {
   InternalAxiosRequestConfig,
   AxiosResponse
 } from 'axios';
+import { localCache } from '@/utils/cache';
+import { LOGIN_TOKEN } from '@/global/constants';
 
 const TIME_OUT = 2000;
 const BASE_URL = {
@@ -13,10 +15,10 @@ const BASE_URL = {
 };
 
 interface RequestInterceptors<T = AxiosResponse> {
-  requestSuccess: (config: any) => InternalAxiosRequestConfig;
-  requestFailure: (err: any) => any;
-  responseSuccess: (res: T) => T;
-  responseFailure: (err: any) => any;
+  requestSuccess?: (config: any) => InternalAxiosRequestConfig;
+  requestFailure?: (err: any) => any;
+  responseSuccess?: (res: T) => T;
+  responseFailure?: (err: any) => any;
 }
 
 interface RequestConfig<T = AxiosResponse> extends AxiosRequestConfig {
@@ -104,7 +106,17 @@ class Request {
 
 const request = new Request({
   baseURL: BASE_URL.cms,
-  timeout: TIME_OUT
+  timeout: TIME_OUT,
+  interceptors: {
+    requestSuccess: (config) => {
+      // 每个请求自动携带token
+      const token = localCache.getCache(LOGIN_TOKEN);
+      if (config.headers && token) {
+        config.headers.Authorization = `Bearer ${token}`;
+      }
+      return config;
+    }
+  }
 });
 
 export default request;
