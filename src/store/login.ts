@@ -1,9 +1,9 @@
 import { defineStore } from 'pinia';
 import { accountLoginRequest } from '@/api/login';
+import { LOGIN_TOKEN } from '@/global/constants';
+import router from '@/router';
 import type { IAccount } from '@/types/index';
 import { localCache } from '@/utils/cache';
-
-const LOGIN_TOKEN = 'login/token';
 
 const useLoginStore = defineStore('login', {
   state: () => ({
@@ -12,6 +12,7 @@ const useLoginStore = defineStore('login', {
     name: ''
   }),
   actions: {
+    // 帐号登录
     async accountLoginAction(account: IAccount) {
       // 帐号登录，获取token等信息
       const loginResult = await accountLoginRequest(account);
@@ -22,6 +23,9 @@ const useLoginStore = defineStore('login', {
 
       // 本地缓存
       localCache.setCache(LOGIN_TOKEN, this.token);
+
+      // 页面跳转
+      router.push('/home');
     }
   }
 });
