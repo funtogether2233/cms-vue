@@ -51,6 +51,7 @@ const accountFormRef = ref<InstanceType<typeof AccountForm>>();
 const phoneFormRef = ref<InstanceType<typeof PhoneForm>>();
 const isRemPwd = ref(false);
 
+// 登录按钮
 function login() {
   if (activeName.value === 'account') {
     console.log('账号登陆');

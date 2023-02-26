@@ -49,6 +49,7 @@ const accountFormRules: FormRules = {
 const accountFormRef = ref<InstanceType<typeof ElForm>>();
 const loginStore = useLoginStore();
 
+// 账号登陆
 function accountLogin() {
   console.log('loginAccount');
   accountFormRef.value?.validate((valid) => {
