@@ -21,12 +21,23 @@ import { ElMessage } from 'element-plus';
 import type { ElForm, FormRules } from 'element-plus';
 import useLoginStore from '@/store/login';
 import type { IAccount } from '@/types/index';
+import { localCache } from '@/utils/cache';
 
+// account缓存常量
+const ACCOUNT_CACHE = {
+  name: 'name',
+  password: 'password'
+};
+
+const loginStore = useLoginStore();
+// account数据
 const accountForm = reactive<IAccount>({
-  name: '',
-  password: ''
+  name: localCache.getCache(ACCOUNT_CACHE.name) ?? '',
+  password: localCache.getCache(ACCOUNT_CACHE.password) ?? ''
 });
+const accountFormRef = ref<InstanceType<typeof ElForm>>();
 
+// 校验规则
 const accountFormRules: FormRules = {
   name: [
     { required: true, message: '请输入帐号！', trigger: 'blur' },
@@ -46,18 +57,25 @@ const accountFormRules: FormRules = {
   ]
 };
 
-const accountFormRef = ref<InstanceType<typeof ElForm>>();
-const loginStore = useLoginStore();
-
 // 账号登陆
-function accountLogin() {
-  console.log('loginAccount');
+function accountLogin(isRemPwd: boolean) {
   accountFormRef.value?.validate((valid) => {
     if (valid) {
-      console.log('登录成功！');
+      // 获取帐号和密码
       const name = accountForm.name;
       const password = accountForm.password;
-      loginStore.accountLoginAction({ name, password });
+
+      // 发送登录请求
+      loginStore.accountLoginAction({ name, password }).then((res) => {
+        // 记住密码
+        if (isRemPwd) {
+          localCache.setCache(ACCOUNT_CACHE.name, name);
+          localCache.setCache(ACCOUNT_CACHE.password, password);
+        } else {
+          localCache.removeCache(ACCOUNT_CACHE.name);
+          localCache.removeCache(ACCOUNT_CACHE.password);
+        }
+      });
     } else {
       ElMessage.error('登录失败');
     }

@@ -16,7 +16,6 @@ const useLoginStore = defineStore('login', {
     async accountLoginAction(account: IAccount) {
       // 帐号登录，获取token等信息
       const loginResult = await accountLoginRequest(account);
-      console.log(loginResult);
       this.id = loginResult.data.id;
       this.token = loginResult.data.token;
       this.name = loginResult.data.name;

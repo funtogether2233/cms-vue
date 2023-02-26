@@ -42,20 +42,26 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref, watch } from 'vue';
 import AccountForm from './AccountForm.vue';
 import PhoneForm from './PhoneForm.vue';
+import { localCache } from '@/utils/cache';
+
+const ISREMPWD_CACHE = 'isRemPwd';
 
 const activeName = ref('account');
 const accountFormRef = ref<InstanceType<typeof AccountForm>>();
 const phoneFormRef = ref<InstanceType<typeof PhoneForm>>();
-const isRemPwd = ref(false);
+const isRemPwd = ref<boolean>(localCache.getCache(ISREMPWD_CACHE) ?? false);
+watch(isRemPwd, (newValue) => {
+  localCache.removeCache(ISREMPWD_CACHE);
+  localCache.setCache(ISREMPWD_CACHE, newValue);
+});
 
 // 登录按钮
 function login() {
   if (activeName.value === 'account') {
-    console.log('账号登陆');
-    accountFormRef.value?.accountLogin();
+    accountFormRef.value?.accountLogin(isRemPwd.value);
   } else {
     console.log('手机登陆');
   }
