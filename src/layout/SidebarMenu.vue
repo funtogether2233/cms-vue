@@ -14,7 +14,7 @@
     >
       <!-- el-sub-menu -->
       <template v-for="item in userMenus" :key="item.id">
-        <el-sub-menu :index="item.id">
+        <el-sub-menu :index="item.id + ''">
           <template #title>
             <!-- 动态组件展示图标 -->
             <el-icon>
@@ -25,7 +25,9 @@
 
           <!-- el-menu-item -->
           <template v-for="subitem in item.children" :key="subitem.id">
-            <el-menu-item :index="subitem.id">{{ subitem.name }}</el-menu-item>
+            <el-menu-item :index="subitem.id + ''">
+              {{ subitem.name }}
+            </el-menu-item>
           </template>
         </el-sub-menu>
       </template>
