@@ -39,9 +39,10 @@
 </template>
 
 <script setup lang="ts">
-import { useRouter } from 'vue-router';
+import { ref } from 'vue';
+import { useRoute, useRouter } from 'vue-router';
 import useLoginStore from '@/store/login';
-import { firstMenu } from '@/utils/mapMenus';
+import { mapPathToMenu } from '@/utils/mapMenus';
 
 defineProps({
   isFold: {
@@ -61,8 +62,10 @@ function handleItemClick(item: any) {
   router.push(url);
 }
 
-// 默认菜单
-const defaultActive = firstMenu?.id + '';
+// 默认菜单刷新不变
+const route = useRoute();
+const pathMenu = mapPathToMenu(route.path, userMenus);
+const defaultActive = ref(pathMenu?.id + '');
 </script>
 
 <style lang="less" scoped>
