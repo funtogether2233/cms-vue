@@ -61,7 +61,7 @@ function handleItemClick(item: any) {
   router.push(url);
 }
 
-// ElMenu的默认菜单
+// 默认菜单
 const defaultActive = firstMenu?.id + '';
 </script>
 

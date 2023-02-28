@@ -16,6 +16,7 @@ router.beforeEach((to, from) => {
   if (to.path === '/main' && !token) {
     return '/login';
   }
+  // 跳转菜单默认页面
   if (to.path === '/main') {
     return firstMenu?.url;
   }
