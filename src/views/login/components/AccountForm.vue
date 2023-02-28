@@ -66,16 +66,21 @@ function accountLogin(isRemPwd: boolean) {
       const password = accountForm.password;
 
       // 发送登录请求
-      loginStore.accountLoginAction({ name, password }).then(() => {
-        // 记住密码
-        if (isRemPwd) {
-          localCache.setCache(ACCOUNT_CACHE.name, name);
-          localCache.setCache(ACCOUNT_CACHE.password, password);
-        } else {
-          localCache.removeCache(ACCOUNT_CACHE.name);
-          localCache.removeCache(ACCOUNT_CACHE.password);
-        }
-      });
+      loginStore
+        .accountLoginAction({ name, password })
+        .then(() => {
+          // 记住密码
+          if (isRemPwd) {
+            localCache.setCache(ACCOUNT_CACHE.name, name);
+            localCache.setCache(ACCOUNT_CACHE.password, password);
+          } else {
+            localCache.removeCache(ACCOUNT_CACHE.name);
+            localCache.removeCache(ACCOUNT_CACHE.password);
+          }
+        })
+        .catch(() => {
+          ElMessage.error('帐号或密码不正确');
+        });
     } else {
       ElMessage.error('登录失败');
     }
