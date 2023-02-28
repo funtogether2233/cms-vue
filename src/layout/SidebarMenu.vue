@@ -39,7 +39,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
+import { computed } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import useLoginStore from '@/store/login';
 import { mapPathToMenu } from '@/utils/mapMenus';
@@ -64,8 +64,10 @@ function handleItemClick(item: any) {
 
 // 默认菜单刷新不变
 const route = useRoute();
-const pathMenu = mapPathToMenu(route.path, userMenus);
-const defaultActive = ref(pathMenu?.id + '');
+const defaultActive = computed(() => {
+  const pathMenu = mapPathToMenu(route.path, userMenus);
+  return pathMenu?.id + '';
+});
 </script>
 
 <style lang="less" scoped>

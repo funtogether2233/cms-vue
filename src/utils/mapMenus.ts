@@ -12,6 +12,12 @@ export function mapMenusToRoutes(userMenus: any[]) {
     for (const submenu of menu.children) {
       const route = dynamicRoutes.find((item) => item.path === submenu.url);
       if (route) {
+        // 为route上层菜单路由由进行重定向，仅进行一次
+        if (!routes.find((item) => item.path === menu.url)) {
+          routes.push({ path: menu.url, redirect: route });
+        }
+
+        // route菜单路由
         routes.push(route);
       }
       if (!firstMenu && route) {
@@ -32,4 +38,23 @@ export function mapPathToMenu(path: string, userMenus: any[]) {
     }
   }
   return undefined;
+}
+
+interface IBreadcrumbs {
+  name: string;
+  path: string;
+}
+
+// 根据路径获取面包屑层级
+export function mapPathToBreadcrumb(path: string, userMenus: any[]) {
+  const breadcrumbs: IBreadcrumbs[] = [];
+  for (const menu of userMenus) {
+    for (const submenu of menu.children) {
+      if (submenu.url === path) {
+        breadcrumbs.push({ name: menu.name, path: menu.url });
+        breadcrumbs.push({ name: submenu.name, path: submenu.url });
+      }
+    }
+  }
+  return breadcrumbs;
 }
