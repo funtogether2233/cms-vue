@@ -7,7 +7,9 @@
       <el-header height="50px">
         <Header @fold-change="handleFoldChange" />
       </el-header>
-      <el-main>Main</el-main>
+      <el-main>
+        <router-view></router-view>
+      </el-main>
     </el-container>
   </el-container>
 </template>
