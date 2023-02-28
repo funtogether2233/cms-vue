@@ -30,48 +30,58 @@ const routes: RouteRecordRaw[] = [
   // 核心技术，商品统计
   {
     path: '/main/analysis/overview',
+    name: 'overview',
     component: overviewComponent
   },
   {
     path: '/main/analysis/dashboard',
+    name: 'dashboard',
     component: dashboardComponent
   },
 
   // 用户管理，部门管理，菜单管理，角色管理
   {
     path: '/main/system/user',
+    name: 'user',
     component: userComponent
   },
   {
     path: '/main/system/department',
+    name: 'department',
     component: departmentComponent
   },
   {
     path: '/main/system/menu',
+    name: 'menu',
     component: menuComponent
   },
   {
     path: '/main/system/role',
+    name: 'role',
     component: roleComponent
   },
 
   // 商品类别，商品信息
   {
     path: '/main/product/category',
+    name: 'category',
     component: categoryComponent
   },
   {
     path: '/main/product/goods',
+    name: 'goods',
     component: goodsComponent
   },
 
   // 你的故事，故事列表
   {
     path: '/main/story/chat',
+    name: 'chat',
     component: chatComponent
   },
   {
     path: '/main/story/list',
+    name: 'list',
     component: listComponent
   }
 ];

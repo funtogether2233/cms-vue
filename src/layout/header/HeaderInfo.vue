@@ -47,7 +47,12 @@
 <script setup lang="ts">
 import { LOGIN_TOKEN, LOGIN_STATE } from '@/global/constants';
 import router from '@/router';
+import useLoginStore from '@/store/login';
 import { localCache } from '@/utils/cache';
+import { mapMenusToRoutes } from '@/utils/mapMenus';
+import type { RouteRecordName } from 'vue-router';
+
+const useLogin = useLoginStore();
 
 // 退出登录
 function logout() {
@@ -55,6 +60,12 @@ function logout() {
   localCache.removeCache(LOGIN_TOKEN);
   localCache.removeCache(LOGIN_STATE.userInfo);
   localCache.removeCache(LOGIN_STATE.userMenus);
+
+  // 移除动态路由
+  const routes = mapMenusToRoutes(useLogin.userMenus);
+  for (const route of routes) {
+    router.removeRoute(route?.name as RouteRecordName);
+  }
 
   // 跳回login界面
   router.push('/login');
