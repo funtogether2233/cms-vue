@@ -6,7 +6,7 @@
     </div>
     <el-menu
       class="menu"
-      default-active="39"
+      :default-active="defaultActive"
       :collapse="isFold"
       text-color="#b7bdc3"
       active-text-color="#fff"
@@ -25,7 +25,10 @@
 
           <!-- el-menu-item -->
           <template v-for="subitem in item.children" :key="subitem.id">
-            <el-menu-item :index="subitem.id + ''">
+            <el-menu-item
+              :index="subitem.id + ''"
+              @click="handleItemClick(subitem)"
+            >
               {{ subitem.name }}
             </el-menu-item>
           </template>
@@ -36,7 +39,9 @@
 </template>
 
 <script setup lang="ts">
+import { useRouter } from 'vue-router';
 import useLoginStore from '@/store/login';
+import { firstMenu } from '@/utils/mapMenus';
 
 defineProps({
   isFold: {
@@ -45,8 +50,19 @@ defineProps({
   }
 });
 
+// 菜单
 const loginStore = useLoginStore();
 const userMenus = loginStore.userMenus;
+
+// 监听item的点击
+const router = useRouter();
+function handleItemClick(item: any) {
+  const url = item.url;
+  router.push(url);
+}
+
+// ElMenu的默认菜单
+const defaultActive = firstMenu?.id + '';
 </script>
 
 <style lang="less" scoped>

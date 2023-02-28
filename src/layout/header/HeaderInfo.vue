@@ -45,7 +45,7 @@
 </template>
 
 <script setup lang="ts">
-import { LOGIN_TOKEN } from '@/global/constants';
+import { LOGIN_TOKEN, LOGIN_STATE } from '@/global/constants';
 import router from '@/router';
 import { localCache } from '@/utils/cache';
 
@@ -53,6 +53,8 @@ import { localCache } from '@/utils/cache';
 function logout() {
   // 删除token
   localCache.removeCache(LOGIN_TOKEN);
+  localCache.removeCache(LOGIN_STATE.userInfo);
+  localCache.removeCache(LOGIN_STATE.userMenus);
 
   // 跳回login界面
   router.push('/login');

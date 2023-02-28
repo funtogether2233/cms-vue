@@ -1,14 +1,17 @@
+import type { RouteRecordRaw } from 'vue-router';
+
 const HomeComponent = () => import('@/views/home/index.vue');
 const LoginComponent = () => import('@/views/login/index.vue');
 const NotFoundComponent = () => import('@/views/not-found/index.vue');
 
-const routes = [
+const routes: RouteRecordRaw[] = [
   {
     path: '/',
-    redirect: '/home'
+    redirect: 'main'
   },
   {
-    path: '/home',
+    path: '/main',
+    name: 'main',
     component: HomeComponent
   },
   {
