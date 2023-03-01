@@ -73,6 +73,7 @@ function login() {
   width: 300px;
   .title {
     text-align: center;
+    margin-bottom: 15px;
   }
   .tabs {
     .label {
