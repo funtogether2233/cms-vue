@@ -9,6 +9,7 @@ import router from '@/router';
 import type { IAccount } from '@/types/index';
 import { localCache } from '@/utils/cache';
 import { mapMenusToRoutes } from '@/utils/mapMenus';
+import useMainStore from './main';
 
 interface ILoginState {
   token: string;
@@ -32,6 +33,10 @@ const useLoginStore = defineStore('login', {
         this.token = token;
         this.userInfo = userInfo;
         this.userMenus = userMenus;
+
+        // 请求所有roles/departments数据
+        const mainStore = useMainStore();
+        mainStore.fetchEntireDataAction();
 
         // 动态路由加载
         const routes = mapMenusToRoutes(this.userMenus);
@@ -58,6 +63,10 @@ const useLoginStore = defineStore('login', {
       const userMenusResult = await getUserMenusByRoleId(id);
       this.userMenus = userMenusResult.data;
       localCache.setCache(LOGIN_STATE.userMenus, this.userMenus);
+
+      // 请求所有roles/departments数据
+      const mainStore = useMainStore();
+      mainStore.fetchEntireDataAction();
 
       // 动态添加路由
       const routes = mapMenusToRoutes(this.userMenus);

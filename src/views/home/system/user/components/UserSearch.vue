@@ -36,7 +36,7 @@
               style="width: 100%"
             >
               <el-option label="启用" :value="1" />
-              <el-option label="禁用" value="0" />
+              <el-option label="禁用" :value="0" />
             </el-select>
           </el-form-item>
         </el-col>
@@ -76,22 +76,30 @@
 import { reactive, ref } from 'vue';
 import type { ElForm } from 'element-plus';
 
+// 定义自定义事件
+const emit = defineEmits(['queryClick', 'resetClick']);
+
+// 定义form数据
 const searchForm = reactive({
   name: '',
   realname: '',
   cellphone: '',
   enable: 1,
-  createAt: []
+  createAt: ''
 });
 
 // 重置
 const formRef = ref<InstanceType<typeof ElForm>>();
 function handleResetClick() {
+  // form中数据重置
   formRef.value?.resetFields();
+
+  // 将事件传递出去，content内部重新发送网络请求
+  emit('resetClick');
 }
 
 function handleQueryClick() {
-  console.log('handleQueryClick');
+  emit('queryClick', searchForm);
 }
 </script>
 
