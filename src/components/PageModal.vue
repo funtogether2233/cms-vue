@@ -82,10 +82,10 @@ interface IModalProps {
   otherInfo?: any
 }
 
-// 0.定义props
+// 定义props
 const props = defineProps<IModalProps>()
 
-// 1.定义内部的属性
+// 定义内部的属性
 const dialogVisible = ref(false)
 const initialData: any = {}
 for (const item of props.modalConfig.formItems) {
@@ -95,10 +95,10 @@ const formData = reactive<any>(initialData)
 const isNewRef = ref(true)
 const editData = ref()
 
-// 2.获取roles/departments数据
+// 获取roles/departments数据
 const systemStore = useSystemStore()
 
-// 2.定义设置dialogVisible方法
+// 定义设置dialogVisible方法
 function setModalVisible(isNew: boolean = true, itemData?: any) {
   dialogVisible.value = true
   isNewRef.value = isNew
@@ -118,7 +118,7 @@ function setModalVisible(isNew: boolean = true, itemData?: any) {
   }
 }
 
-// 3.点击了确定的逻辑
+// 点击了确定的逻辑
 function handleConfirmClick() {
   dialogVisible.value = false
 

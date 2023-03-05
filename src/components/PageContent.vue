@@ -20,7 +20,7 @@
                 {{ formatUTC(scope.row[item.prop]) }}
               </template>
             </el-table-column>
-          </template> 
+          </template>
           <template v-else-if="item.type === 'handler'">
             <el-table-column align="center" v-bind="item">
               <template #default="scope">
@@ -100,16 +100,16 @@ const props = defineProps<IProps>()
 // 定义事件
 const emit = defineEmits(['newClick', 'editClick'])
 
-// 1.发起action，请求usersList的数据
+// 发起action，请求usersList的数据
 const systemStore = useSystemStore()
 const currentPage = ref(1)
 const pageSize = ref(10)
 fetchPageListData()
 
-// 2.获取usersList数据,进行展示
+// 获取usersList数据,进行展示
 const { pageList, pageTotalCount } = storeToRefs(systemStore)
 
-// 3.页码相关的逻辑
+// 页码相关的逻辑
 function handleSizeChange() {
   fetchPageListData()
 }
@@ -117,19 +117,19 @@ function handleCurrentChange() {
   fetchPageListData()
 }
 
-// 4.定义函数, 用于发送网络请求
+// 定义函数, 用于发送网络请求
 function fetchPageListData(formData: any = {}) {
-  // 1.获取offset/size
+  // 获取offset/size
   const size = pageSize.value
   const offset = (currentPage.value - 1) * size
   const pageInfo = { size, offset }
 
-  // 2.发起网络请求
+  // 发起网络请求
   const queryInfo = { ...pageInfo, ...formData }
   systemStore.postPageListAction(props.contentConfig.pageName, queryInfo)
 }
 
-// 5.删除/新建/编辑的操作
+// 删除/新建/编辑的操作
 function handleDeleteBtnClick(id: number) {
   systemStore.deletePageByIdAction(props.contentConfig.pageName, id)
 }

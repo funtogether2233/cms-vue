@@ -77,10 +77,10 @@ const searchForm = reactive(initialForm)
 // 重置操作
 const formRef = ref<InstanceType<typeof ElForm>>()
 function handleResetClick() {
-  // 1.form中的数据全部重置
+  // form中的数据全部重置
   formRef.value?.resetFields()
 
-  // 2.将事件出去, content内部重新发送网络请求
+  // 将事件出去, content内部重新发送网络请求
   emit('resetClick')
 }
 
